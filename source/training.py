@@ -43,9 +43,9 @@ estimator = PyTorch(
     #instance_type="ml.p3.2xlarge",
     instance_type="ml.m4.xlarge",
     py_version="py3",
-    # use_spot_instances=True,  # Use a spot instance
-    # max_run=300,  # Max training time
-    # max_wait=600,  # Max training time + spot waiting time
+    use_spot_instances=True,  # Use a spot instance
+    max_run=300,  # Max training time
+    max_wait=600,  # Max training time + spot waiting time
     hyperparameters={"epochs": 20, "backend": "gloo"},
 )
 
@@ -56,5 +56,5 @@ estimator.fit({"training": "s3://" + bucket + "/" + prefix}, job_name=job_name)
 # Deploy the model
 endpoint_name = f"{stack_name}-{commit_id[:7]}"
 predictor = estimator.deploy(
-    initial_instance_count=1, instance_type="ml.m4.xlarge", endpoint_name=endpoint_name
+    initial_instance_count=1, instance_type="ml.p3.2xlarge", endpoint_name=endpoint_name
 )
