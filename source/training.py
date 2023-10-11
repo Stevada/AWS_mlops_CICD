@@ -40,7 +40,7 @@ estimator = PyTorch(
     role=role,
     framework_version="1.4.0",
     instance_count=2,
-    instance_type="ml.p3.2xlarge",
+    instance_type="ml.p2.xlarge",
     # instance_type="ml.m4.xlarge",
     py_version="py3",
     use_spot_instances=True,  # Use a spot instance
@@ -56,5 +56,5 @@ estimator.fit({"training": "s3://" + bucket + "/" + prefix}, job_name=job_name)
 # Deploy the model
 endpoint_name = f"{stack_name}-{commit_id[:7]}"
 predictor = estimator.deploy(
-    initial_instance_count=1, instance_type="ml.p3.2xlarge", endpoint_name=endpoint_name
+    initial_instance_count=1, instance_type="ml.p2.xlarge", endpoint_name=endpoint_name
 )
